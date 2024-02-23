@@ -12,21 +12,29 @@ public class ConsolaGUI extends JFrame {
     private JLabel directoryLabel;
 
     public ConsolaGUI() {
+        
         cmd = new Comandos(System.getProperty("user.dir"));
         setTitle("Consola de Comandos");
         setSize(600, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        getContentPane().setBackground(Color.BLACK); 
 
         JPanel topPanel = new JPanel(new BorderLayout());
         directoryLabel = new JLabel("Directorio actual: " + cmd.getCurrentPath());
+        directoryLabel.setForeground(Color.WHITE); 
+        topPanel.setBackground(Color.BLACK); 
         topPanel.add(directoryLabel, BorderLayout.NORTH);
 
         outputTextArea = new JTextArea();
         outputTextArea.setEditable(false);
+        outputTextArea.setBackground(Color.BLACK); 
+        outputTextArea.setForeground(Color.WHITE); 
         JScrollPane scrollPane = new JScrollPane(outputTextArea);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
         inputTextField = new JTextField();
+        inputTextField.setBackground(Color.BLACK); 
+        inputTextField.setForeground(Color.WHITE); 
         inputTextField.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String command = inputTextField.getText().trim();
@@ -34,6 +42,7 @@ public class ConsolaGUI extends JFrame {
             }
         });
 
+        getContentPane().setLayout(new BorderLayout()); 
         getContentPane().add(topPanel, BorderLayout.NORTH);
         getContentPane().add(scrollPane, BorderLayout.CENTER);
         getContentPane().add(inputTextField, BorderLayout.SOUTH);
@@ -82,8 +91,7 @@ public class ConsolaGUI extends JFrame {
                 result = "Texto escrito en archivo.";
                 break;
             case "rd":
-                cmd.leer();
-                result = "Contenido del archivo mostrado en consola.";
+                result = cmd.leer();
                 break;
             default:
                 result = "Error: Comando no reconocido.";

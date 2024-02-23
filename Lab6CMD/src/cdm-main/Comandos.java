@@ -80,12 +80,12 @@ public class Comandos {
     
     public String cambioDir(String direccion) {
         if (direccion.charAt(0) != '/') {
-            File newDir = new File(dirActual.getAbsolutePath() + "/" + direccion);
+            File nuevaDir = new File(dirActual.getAbsolutePath() + "/" + direccion);
 
-            if (!newDir.isDirectory()) {
-                return "Error. La direccion tiene que ser una carpeta.";
+            if (!nuevaDir.isDirectory()) {
+                return "Error: La direccion tiene que ser una carpeta.";
             }
-            dirActual = newDir;
+            dirActual = nuevaDir;
             return "";
         }
     }
@@ -171,40 +171,39 @@ public class Comandos {
         return "Hora actual: " + horaForm;
     }
 
-    void escribir(String contenido) {
+    String escribir(String contenido) {
         try {
             if (dirActual == null) {
-                JOptionPane.showMessageDialog(null, "Error, archivo inexistente.");
-                return;
+                return "Error: Archivo inexistente.";
             }
             FileWriter escritor = new FileWriter(dirActual, true);
             BufferedWriter bw = new BufferedWriter(escritor);
             bw.write(contenido);
             bw.newLine();
             bw.close();
-            JOptionPane.showMessageDialog(null, "Se ha escrito en el archivo.");
+            return "Se ha escrito en el archivo.";
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return "";
     }
 
-    void leer() {
+    String leer() {
         try {
             if (dirActual == null) {
-                JOptionPane.showMessageDialog(null, "Error, archivo inexistente.");
-
-                return;
+                return "Error: Archivo Inexistente";
             }
             FileReader lector = new FileReader(dirActual);
             BufferedReader br = new BufferedReader(lector);
             String linea;
             while ((linea = br.readLine()) != null) {
-                System.out.println(linea);
+                return linea;
             }
             br.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return "";
     }
 
 }
